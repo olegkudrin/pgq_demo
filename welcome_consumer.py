@@ -1,21 +1,21 @@
 import sys
 from typing import Sequence
 
-import pgq
+from pgq import Consumer
 
 from skytools.basetypes import Connection
 
 from pgq.event import Event
 
 
-class WelcomeConsumer(pgq.Consumer):
+class WelcomeConsumer(Consumer):
     def __init__(self, args: Sequence[str]):
-        pgq.Consumer.__init__(self, "welcome_app", "src_db", args)
+        super().__init__("welcome_app", "src_db", args)
 
-    def process_event(self, db: Connection, ev: Event) -> None:
-        if ev.ev_type == "welcome":
-            self.log.info("Welcome %s!" % ev.ev_data)
-        ev.tag_done()
+    def process_event(self, db: Connection, event: Event) -> None:
+        if event.ev_type == "welcome":
+            self.log.info("Welcome %s!" % event.ev_data)
+        event.tag_done()
 
 
 if __name__ == "__main__":
