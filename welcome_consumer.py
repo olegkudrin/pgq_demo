@@ -2,10 +2,8 @@ import sys
 from typing import Sequence
 
 from pgq import Consumer
-
-from skytools.basetypes import Connection
-
 from pgq.event import Event
+from skytools.basetypes import Connection
 
 
 class WelcomeConsumer(Consumer):
